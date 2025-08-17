@@ -1,0 +1,456 @@
+/* 新像素主义色彩系统 */
+:root {
+    /* 基础色板 */
+    --pixel-blue: #2D7FF9;
+    --pixel-pink: #F82E8A;
+    --pixel-green: #00CC88;
+    --pixel-yellow: #FFBE0B;
+    --pixel-purple: #8A2BE2;
+    --pixel-dark: #1A1D27;
+    --pixel-light: #F4F6FC;
+    --pixel-gray: #E2E8F0;
+    
+    /* 像素阴影 */
+    --pixel-shadow-blue: 4px 4px 0 var(--pixel-blue);
+    --pixel-shadow-pink: 4px 4px 0 var(--pixel-pink);
+    --pixel-shadow-green: 4px 4px 0 var(--pixel-green);
+    --pixel-shadow-yellow: 4px 4px 0 var(--pixel-yellow);
+    --pixel-shadow-purple: 4px 4px 0 var(--pixel-purple);
+    
+    /* 语义化颜色别名 */
+    --color-primary: var(--pixel-pink);
+    --color-secondary: var(--pixel-blue);
+    --color-accent: var(--pixel-purple);
+    --color-success: var(--pixel-green);
+    --color-warning: var(--pixel-yellow);
+    
+    --color-bg-page: var(--pixel-light);
+    --color-bg-card: #FFFFFF;
+    --color-bg-header: var(--pixel-dark);
+    
+    --color-text-primary: var(--pixel-dark);
+    --color-text-secondary: rgba(26, 29, 39, 0.75);
+    --color-text-tertiary: rgba(26, 29, 39, 0.5);
+    --color-text-inverse: #FFFFFF;
+    
+    --color-border: #EDEFF3;
+    --color-divider: rgba(26, 29, 39, 0.1);
+    
+    /* 尺寸令牌 */
+    --spacing-xs: 8rpx;
+    --spacing-sm: 16rpx;
+    --spacing-md: 24rpx;
+    --spacing-lg: 32rpx;
+    --spacing-xl: 40rpx;
+    --spacing-xxl: 60rpx;
+    
+    /* 字体大小 */
+    --font-size-xs: 22rpx;
+    --font-size-sm: 24rpx;
+    --font-size-md: 28rpx;
+    --font-size-lg: 32rpx;
+    --font-size-xl: 40rpx;
+    --font-size-xxl: 48rpx;
+    
+    /* 圆角 */
+    --radius-none: 0;
+    --radius-sm: 4rpx;
+    --radius-md: 8rpx;
+    
+    /* Z轴层级 */
+    --z-base: 1;
+    --z-drawer: 10;
+    --z-modal: 20;
+    --z-popup: 30;
+    --z-toast: 40;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', 'Pixelify Sans', monospace;
+}
+
+@font-face {
+    font-family: 'Pixelify Sans';
+    src: url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+}
+
+body {
+    background-color: var(--pixel-light);
+    color: var(--pixel-dark);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 像素风格标题 */
+.pixel-title {
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--pixel-dark);
+    text-shadow: 3px 3px 0 var(--pixel-yellow);
+    text-align: center;
+}
+
+/* 卡片列表布局 */
+.pixel-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+/* 列表卡片样式 */
+.pixel-card {
+    background-color: white;
+    border: 3px solid var(--pixel-dark);
+    border-radius: 0;
+    box-shadow: var(--pixel-shadow-blue);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.pixel-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--pixel-blue);
+}
+
+/* 卡片颜色变体 */
+.pixel-card.pink {
+    box-shadow: var(--pixel-shadow-pink);
+}
+.pixel-card.pink:hover {
+    box-shadow: 6px 6px 0 var(--pixel-pink);
+}
+
+.pixel-card.green {
+    box-shadow: var(--pixel-shadow-green);
+}
+.pixel-card.green:hover {
+    box-shadow: 6px 6px 0 var(--pixel-green);
+}
+
+.pixel-card.yellow {
+    box-shadow: var(--pixel-shadow-yellow);
+}
+.pixel-card.yellow:hover {
+    box-shadow: 6px 6px 0 var(--pixel-yellow);
+}
+
+.pixel-card.purple {
+    box-shadow: var(--pixel-shadow-purple);
+}
+.pixel-card.purple:hover {
+    box-shadow: 6px 6px 0 var(--pixel-purple);
+}
+
+/* 卡片头部 */
+.pixel-card-header {
+    background-color: var(--pixel-dark);
+    color: white;
+    padding: 15px;
+    position: relative;
+}
+
+.pixel-card-header::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 15px;
+    width: 30px;
+    height: 10px;
+    background-color: var(--pixel-blue);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.pink .pixel-card-header::after {
+    background-color: var(--pixel-pink);
+}
+
+.green .pixel-card-header::after {
+    background-color: var(--pixel-green);
+}
+
+.yellow .pixel-card-header::after {
+    background-color: var(--pixel-yellow);
+}
+
+.purple .pixel-card-header::after {
+    background-color: var(--pixel-purple);
+}
+
+.pixel-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+.pixel-card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* 卡片内容 */
+.pixel-card-body {
+    padding: 20px;
+}
+
+.pixel-card-excerpt {
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.pixel-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pixel-tag {
+    background-color: var(--pixel-gray);
+    color: var(--pixel-dark);
+    padding: 4px 10px;
+    border-radius: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid var(--pixel-dark);
+    box-shadow: 2px 2px 0 var(--pixel-dark);
+}
+
+/* 详情页样式 */
+.pixel-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: white;
+    border: 3px solid var(--pixel-dark);
+    box-shadow: var(--pixel-shadow-purple);
+    display: none; /* 初始隐藏 */
+}
+
+/* 详情页头部 */
+.pixel-detail-header {
+    background-color: var(--pixel-dark);
+    color: white;
+    padding: 25px 30px;
+    position: relative;
+}
+
+.pixel-detail-header::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.1);
+    clip-path: polygon(
+        0% 0%, 100% 0%, 100% 30%, 
+        70% 30%, 70% 100%, 30% 100%, 
+        30% 30%, 0% 30%
+    );
+}
+
+.pixel-detail-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-family: 'Pixelify Sans', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pixel-detail-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* 详情内容 */
+.pixel-detail-body {
+    padding: 30px;
+}
+
+/* UI组件工具类 */
+
+/* 按钮 */
+.pixel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    border: 3px solid var(--color-text-primary);
+    box-shadow: 4px 4px 0 var(--color-text-primary);
+    font-family: 'Pixelify Sans', monospace;
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+}
+
+.pixel-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--color-text-primary);
+}
+
+.pixel-btn:active {
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0 var(--color-text-primary);
+}
+
+.pixel-btn.secondary {
+    background-color: var(--color-secondary);
+}
+
+.pixel-btn.sm {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+}
+
+.pixel-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* 骨架屏 */
+.pixel-skeleton {
+    background: linear-gradient(90deg, var(--color-bg-card) 25%, var(--color-gray) 37%, var(--color-bg-card) 63%);
+    background-size: 400% 100%;
+    animation: skeleton-loading 1.4s ease infinite;
+    height: 32rpx;
+    margin-bottom: var(--spacing-sm);
+    border: 2px solid var(--color-text-primary);
+}
+
+.pixel-skeleton.title {
+    height: 48rpx;
+    width: 50%;
+    margin: 0 auto var(--spacing-md);
+}
+
+.pixel-skeleton.avatar {
+    height: 120rpx;
+    width: 120rpx;
+    margin: 0 auto var(--spacing-md);
+}
+
+.pixel-skeleton.card {
+    height: 240rpx;
+    margin-bottom: var(--spacing-md);
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+/* 空状态 */
+.pixel-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    text-align: center;
+}
+
+.pixel-empty-icon {
+    font-size: 80rpx;
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.6;
+}
+
+.pixel-empty-text {
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* 错误状态 */
+.pixel-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    text-align: center;
+    border: 3px dashed var(--color-primary);
+    margin: var(--spacing-lg) 0;
+}
+
+.pixel-error-icon {
+    font-size: 80rpx;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.pixel-error-text {
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* 横向滚动容器 */
+.pixel-scroll-x {
+    display: flex;
+    overflow-x: auto;
+    padding: var(--spacing-md) 0;
+    margin: 0 -40rpx;
+    padding: 0 40rpx;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.pixel-scroll-x::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.pixel-scroll-item {
+    flex: 0 0 auto;
+    margin-right: var(--spacing-md);
+    width: 280rpx;
+}
+
+/* 动画效果 */
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.slide-in {
+    animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(20rpx); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

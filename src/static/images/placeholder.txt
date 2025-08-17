@@ -1,0 +1,5 @@
+This directory is for static images used in the application.
+
+Please add your actual game images here with appropriate names like game1.jpg, game2.jpg, etc.
+
+Supported formats: jpg, png, gif
