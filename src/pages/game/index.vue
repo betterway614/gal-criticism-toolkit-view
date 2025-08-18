@@ -2,18 +2,18 @@
   <view class="bingo-container">
     <!-- 头部信息 -->
     <view class="bingo-header">
-      <view class="pixel-title">GAL 宾果挑战</view>
+      <view class="anime-title">GAL 宾果挑战</view>
       <view class="subtitle">选择符合你偏好的特征，凑成一条线即可获胜</view>
     </view>
 
     <!-- 分数与控制 -->
     <view class="bingo-controls">
-      <view class="score pixel-card">已选：{{ selectedCount }} / 12</view>
-      <button class="pixel-btn" @click="reset">重置</button>
+      <view class="score anime-card">已选：{{ selectedCount }} / 12</view>
+      <button class="anime-btn" @click="reset">重置</button>
     </view>
 
     <!-- 宾果网格 5x5 -->
-    <view class="bingo-grid pixel-card">
+    <view class="bingo-grid anime-card">
       <view 
         class="bingo-cell"
         v-for="(cell, idx) in grid"
@@ -27,12 +27,12 @@
 
     <!-- 结束弹层 -->
     <view v-if="hasWin" class="win-overlay">
-      <view class="win-card pixel-card">
+      <view class="win-card anime-card">
         <view class="result-title">宾果！🎉</view>
         <view class="result-desc">你完成了 {{ winLineCount }} 条连线</view>
         <view class="result-actions">
-          <button class="pixel-btn" @click="goRecommend">查看推荐</button>
-          <button class="pixel-btn secondary" @click="reset">再来一局</button>
+          <button class="anime-btn" @click="goRecommend">查看推荐</button>
+          <button class="anime-btn secondary" @click="reset">再来一局</button>
         </view>
       </view>
     </view>
@@ -97,15 +97,18 @@ function goRecommend() {
 .bingo-container {
   min-height: 100vh;
   background: var(--color-bg-page);
+  padding-bottom: var(--spacing-xl);
 }
 
 .bingo-header {
   padding: var(--spacing-lg);
   text-align: center;
 }
+
 .subtitle {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
+  margin-top: var(--spacing-sm);
 }
 
 .bingo-controls {
@@ -114,10 +117,15 @@ function goRecommend() {
   justify-content: space-between;
   padding: 0 var(--spacing-lg);
   margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
 }
 
 .score {
+  flex: 1;
   padding: var(--spacing-sm) var(--spacing-md);
+  text-align: center;
+  border: 1rpx solid var(--color-border);
+  box-shadow: 0 4rpx 16rpx rgba(248, 46, 138, 0.1);
 }
 
 .bingo-grid {
@@ -126,6 +134,7 @@ function goRecommend() {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: var(--spacing-sm);
+  border: 1rpx solid var(--color-border);
 }
 
 .bingo-cell {
@@ -135,22 +144,52 @@ function goRecommend() {
   justify-content: center;
   text-align: center;
   padding: var(--spacing-sm);
-  border: 2px solid var(--color-text-primary);
-  background: var(--color-bg-card);
-  box-shadow: 2px 2px 0 var(--color-secondary);
+  border: 1rpx solid var(--color-border);
+  background: white;
+  border-radius: var(--radius-sm);
   user-select: none;
-  transition: transform 0.12s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.bingo-cell:active { transform: scale(0.98); }
+.bingo-cell:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 2rpx 8rpx rgba(248, 46, 138, 0.1);
+}
+
 .bingo-cell.active {
-  background: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   color: white;
+  border-color: var(--color-primary);
+  box-shadow: 0 4rpx 16rpx rgba(248, 46, 138, 0.2);
+  animation: pulse 0.5s ease;
 }
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
 .bingo-cell.win {
-  outline: 3px solid var(--color-warning);
+  box-shadow: 0 0 20rpx var(--color-warning);
+  animation: winGlow 2s infinite alternate;
 }
-.cell-text { font-size: var(--font-size-sm); }
+
+@keyframes winGlow {
+  0% {
+    box-shadow: 0 0 20rpx var(--color-warning);
+  }
+  100% {
+    box-shadow: 0 0 40rpx var(--color-warning);
+  }
+}
+
+.cell-text {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
 
 .win-overlay {
   position: fixed;
@@ -159,9 +198,55 @@ function goRecommend() {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.3s ease;
 }
-.win-card { width: 80%; max-width: 640rpx; padding: var(--spacing-lg); }
-.result-title { font-size: var(--font-size-xl); font-weight: 700; margin-bottom: var(--spacing-sm); }
-.result-desc { color: var(--color-text-secondary); margin-bottom: var(--spacing-md); }
-.result-actions { display: flex; gap: var(--spacing-sm); justify-content: center; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.win-card {
+  width: 80%;
+  max-width: 640rpx;
+  padding: var(--spacing-lg);
+  animation: slideUp 0.3s ease;
+  border: 1rpx solid var(--color-border);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.result-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.result-desc {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.result-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+}
 </style>

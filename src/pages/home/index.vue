@@ -3,12 +3,12 @@
     <!-- 页面头部 -->
     <view class="home-header">
       <image src="/static/logo.png" class="home-logo" />
-      <view class="home-title pixel-title">Galgame 批评工具箱</view>
+      <view class="home-title anime-title">Galgame 批评工具箱</view>
       <view class="home-subtitle">探索、分析、发现你的 Galgame 宇宙</view>
       <!-- 新增主行动按钮 -->
       <view class="header-actions">
-        <button class="pixel-btn" @click="navigateTo('/pages/dialogue/index')">开始对话</button>
-        <button class="pixel-btn secondary" @click="navigateTo('/pages/recommend/index')">浏览推荐</button>
+        <button class="anime-btn" @click="navigateTo('/pages/dialogue/index')">开始对话</button>
+        <button class="anime-btn secondary" @click="navigateTo('/pages/recommend/index')">浏览推荐</button>
       </view>
     </view>
 
@@ -17,7 +17,7 @@
       <view class="section-title">开始你的探索之旅</view>
       <view class="interaction-cards">
         <view 
-          class="interaction-card pixel-card pink slide-in" 
+          class="interaction-card anime-card pink slide-in" 
           :style="{ 'animation-delay': '0.1s' }"
           @click="navigateTo('/pages/dialogue/index')"
         >
@@ -27,7 +27,7 @@
         </view>
         
         <view 
-          class="interaction-card pixel-card green slide-in"
+          class="interaction-card anime-card green slide-in"
           :style="{ 'animation-delay': '0.2s' }"
           @click="navigateTo('/pages/questionnaire/index')"
         >
@@ -37,7 +37,7 @@
         </view>
         
         <view 
-          class="interaction-card pixel-card yellow slide-in"
+          class="interaction-card anime-card yellow slide-in"
           :style="{ 'animation-delay': '0.3s' }"
           @click="navigateTo('/pages/game/index')"
         >
@@ -58,32 +58,32 @@
       </view>
       
       <!-- 加载状态 -->
-      <view v-if="recommendState.loading" class="pixel-scroll-x">
-        <view class="pixel-scroll-item" v-for="i in 3" :key="i">
-          <view class="pixel-skeleton card"></view>
+      <view v-if="recommendState.loading" class="anime-scroll-x">
+        <view class="anime-scroll-item" v-for="i in 3" :key="i">
+          <view class="anime-skeleton card"></view>
         </view>
       </view>
       
       <!-- 错误状态 -->
-      <view v-else-if="recommendState.error" class="pixel-error">
-        <view class="pixel-error-icon">⚠️</view>
-        <view class="pixel-error-text">{{ recommendState.error }}</view>
-        <button class="pixel-btn sm" @click="loadRecommendations">重试</button>
+      <view v-else-if="recommendState.error" class="anime-error">
+        <view class="anime-error-icon">⚠️</view>
+        <view class="anime-error-text">{{ recommendState.error }}</view>
+        <button class="anime-btn sm" @click="loadRecommendations">重试</button>
       </view>
       
       <!-- 空状态 -->
-      <view v-else-if="!recommendState.data.length" class="pixel-empty">
-        <view class="pixel-empty-icon">📚</view>
-        <view class="pixel-empty-text">暂无推荐内容</view>
-        <button class="pixel-btn sm" @click="navigateTo('/pages/questionnaire/index')">
+      <view v-else-if="!recommendState.data.length" class="anime-empty">
+        <view class="anime-empty-icon">📚</view>
+        <view class="anime-empty-text">暂无推荐内容</view>
+        <button class="anime-btn sm" @click="navigateTo('/pages/questionnaire/index')">
           去填写问卷
         </button>
       </view>
       
       <!-- 推荐内容 -->
-      <view v-else class="pixel-scroll-x">
+      <view v-else class="anime-scroll-x">
         <view 
-          class="pixel-scroll-item recommend-card"
+          class="anime-scroll-item recommend-card"
           v-for="(item, index) in recommendState.data" 
           :key="item.id"
           @click="handleRecommendClick(item)"
@@ -95,7 +95,7 @@
           <view class="recommend-info">
             <view class="recommend-title">{{ item.title }}</view>
             <view class="recommend-tags">
-              <view class="pixel-tag" v-for="tag in item.tags.slice(0, 2)" :key="tag">
+              <view class="anime-tag" v-for="tag in item.tags.slice(0, 2)" :key="tag">
                 {{ tag }}
               </view>
             </view>
@@ -183,88 +183,107 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /* 页面容器 */
 .home-container {
   min-height: 100vh;
-  background-color: var(--color-bg-page);
-  padding: var(--spacing-xl) var(--spacing-lg);
+  background-color: #FFF0F5;
+  padding: 30rpx;
+  position: relative;
 }
 
 /* 页面头部 */
 .home-header {
   text-align: center;
-  margin-bottom: var(--spacing-xxl);
-  padding: var(--spacing-xl) var(--spacing-lg);
-  background-color: var(--color-bg-card);
-  border: 3px solid var(--color-text-primary);
-  box-shadow: 6px 6px 0 var(--color-secondary);
-  background-image:
-    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-  background-size: 16rpx 16rpx;
+  margin-bottom: 40rpx;
+  padding: 40rpx 30rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(248, 46, 138, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8rpx;
+  background: linear-gradient(90deg, #F82E8A, #FF79B0);
 }
 
 .home-logo {
   width: 120rpx;
   height: 120rpx;
-  margin-bottom: var(--spacing-md);
-  border: 3px solid var(--color-text-primary);
-  box-shadow: 4px 4px 0 var(--color-primary);
+  margin-bottom: 20rpx;
+  border-radius: 50%;
+  box-shadow: 0 4rpx 16rpx rgba(248, 46, 138, 0.2);
 }
 
 .home-title {
-  font-size: var(--font-size-xxl);
-  margin-bottom: var(--spacing-sm);
+  font-size: 40rpx;
+  margin-bottom: 15rpx;
+  color: #F82E8A;
+  font-weight: bold;
+  letter-spacing: 2rpx;
 }
 
 .home-subtitle {
-  font-size: var(--font-size-md);
-  color: var(--color-text-secondary);
+  font-size: 28rpx;
+  color: #666;
   line-height: 1.5;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20rpx;
+  margin-top: 30rpx;
 }
 
 /* 功能区块 */
 .interaction-section,
 .recommend-section {
-  margin-bottom: var(--spacing-xxl);
+  margin-bottom: 40rpx;
 }
 
 .section-title {
-  font-size: var(--font-size-xl);
+  font-size: 36rpx;
   font-weight: 700;
-  color: var(--color-text-primary);
-  margin-bottom: var(--spacing-lg);
+  color: #F82E8A;
+  margin-bottom: 20rpx;
   text-align: center;
-  font-family: 'Pixelify Sans', monospace;
+  letter-spacing: 1rpx;
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 20rpx;
 }
 
 .section-more {
-  font-size: var(--font-size-sm);
-  color: var(--color-primary);
+  font-size: 28rpx;
+  color: #F82E8A;
   cursor: pointer;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border: 2px solid var(--color-primary);
-  transition: all 0.2s ease;
+  padding: 10rpx 20rpx;
+  background-color: rgba(248, 46, 138, 0.1);
+  border-radius: 15rpx;
+  transition: all 0.3s ease;
 }
 
-.section-more:hover {
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
+.section-more:active {
+  background-color: rgba(248, 46, 138, 0.2);
 }
 
 /* 交互卡片网格 */
 .interaction-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280rpx, 1fr));
-  gap: var(--spacing-lg);
+  gap: 20rpx;
 }
 
 .interaction-card {
@@ -274,13 +293,18 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: var(--spacing-lg);
+  padding: 30rpx;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s ease;
+  border-radius: 20rpx;
+  background-color: white;
+  box-shadow: 0 4rpx 16rpx rgba(248, 46, 138, 0.1);
+  border: 1rpx solid rgba(248, 46, 138, 0.2);
 }
 
-.interaction-card:hover {
-  transform: translate(-2px, -2px);
+.interaction-card:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 2rpx 8rpx rgba(248, 46, 138, 0.05);
 }
 
 .interaction-icon {

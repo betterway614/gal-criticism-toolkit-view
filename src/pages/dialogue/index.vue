@@ -2,7 +2,7 @@
   <view class="dialogue-container">
     <!-- 页面头部 -->
     <view class="dialogue-header">
-      <view class="pixel-title">智能对话助手</view>
+      <view class="anime-title">智能对话助手</view>
       <view class="subtitle">与AI助手深度交流，发现你的游戏偏好</view>
     </view>
 
@@ -24,7 +24,7 @@
             <text v-if="msg.role === 'assistant'">🤖</text>
             <text v-else>👤</text>
           </view>
-          <view class="message-bubble pixel-card" :class="msg.role">
+          <view class="message-bubble anime-card" :class="msg.role">
             <view class="message-content">{{ msg.content }}</view>
             <view class="message-time">{{ formatTime(msg.timestamp) }}</view>
           </view>
@@ -33,7 +33,7 @@
         <!-- 加载状态 -->
         <view v-if="isLoading" class="message-item assistant">
           <view class="message-avatar">🤖</view>
-          <view class="message-bubble pixel-card assistant">
+          <view class="message-bubble anime-card assistant">
             <view class="typing-indicator">
               <view class="typing-dot"></view>
               <view class="typing-dot"></view>
@@ -56,7 +56,7 @@
           confirm-type="send"
         />
         <button 
-          class="send-btn pixel-btn" 
+          class="send-btn anime-btn" 
           :disabled="!inputMessage.trim() || isLoading"
           @click="sendMessage"
         >
@@ -67,7 +67,7 @@
       <!-- 快捷回复 -->
       <view class="quick-replies" v-if="quickReplies.length > 0">
         <view 
-          class="quick-reply pixel-tag"
+          class="quick-reply anime-tag"
           v-for="(reply, index) in quickReplies"
           :key="index"
           @click="selectQuickReply(reply)"
@@ -198,25 +198,36 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .dialogue-container {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--color-bg-page);
+  background-color: #FFF0F5;
 }
 
 .dialogue-header {
-  padding: var(--spacing-lg);
+  padding: 30rpx;
   text-align: center;
-  background-color: var(--color-bg-card);
-  border-bottom: 3px solid var(--color-text-primary);
+  background-color: #F82E8A;
+  position: relative;
+  box-shadow: 0 4rpx 16rpx rgba(248, 46, 138, 0.1);
+}
+
+.dialogue-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8rpx;
+  background: linear-gradient(90deg, #F82E8A, #FF79B0);
 }
 
 .subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  margin-top: var(--spacing-xs);
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 10rpx;
 }
 
 .dialogue-area {
@@ -226,13 +237,25 @@ onMounted(async () => {
 
 .message-list {
   height: 100%;
-  padding: var(--spacing-md);
+  padding: 20rpx;
 }
 
 .message-item {
   display: flex;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 24rpx;
   align-items: flex-start;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .message-item.user {
@@ -243,116 +266,224 @@ onMounted(async () => {
   width: 60rpx;
   height: 60rpx;
   border-radius: 50%;
-  background-color: var(--color-bg-card);
-  border: 2px solid var(--color-text-primary);
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24rpx;
-  margin: 0 var(--spacing-sm);
-  box-shadow: 2px 2px 0 var(--color-secondary);
+  font-size: 32rpx;
+  margin: 0 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
 .message-bubble {
   max-width: 70%;
-  padding: var(--spacing-md);
+  padding: 20rpx 24rpx;
   position: relative;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .message-bubble.assistant {
-  background-color: var(--color-bg-card);
-  border-color: var(--color-primary);
+  background-color: white;
+  color: #333;
+  border-radius: 0 20rpx 20rpx 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(248, 46, 138, 0.1);
+  border: 1rpx solid rgba(248, 46, 138, 0.2);
 }
 
 .message-bubble.user {
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
-  border-color: var(--color-primary);
+  background-color: #F82E8A;
+  color: white;
+  border-radius: 20rpx 0 20rpx 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(248, 46, 138, 0.2);
+}
+
+.message-bubble.assistant::before {
+  content: '';
+  position: absolute;
+  left: -14rpx;
+  top: 16rpx;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10rpx 16rpx 10rpx 0;
+  border-color: transparent rgba(248, 46, 138, 0.2) transparent transparent;
+}
+
+.message-bubble.user::before {
+  content: '';
+  position: absolute;
+  right: -14rpx;
+  top: 16rpx;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10rpx 0 10rpx 16rpx;
+  border-color: transparent transparent transparent #F82E8A;
 }
 
 .message-content {
-  font-size: var(--font-size-md);
+  font-size: 28rpx;
   line-height: 1.5;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 8rpx;
 }
 
 .message-time {
-  font-size: var(--font-size-xs);
+  font-size: 20rpx;
   opacity: 0.7;
   text-align: right;
 }
 
 .typing-indicator {
   display: flex;
-  gap: var(--spacing-xs);
+  gap: 12rpx;
   align-items: center;
+  padding: 10rpx 0;
 }
 
 .typing-dot {
-  width: 8rpx;
-  height: 8rpx;
+  width: 12rpx;
+  height: 12rpx;
   border-radius: 50%;
-  background-color: var(--color-text-secondary);
+  background-color: #F82E8A;
   animation: typing 1.4s infinite ease-in-out;
 }
 
 .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-.typing-dot:nth-child(2) { animation-delay: -0.16s; }
-.typing-dot:nth-child(3) { animation-delay: 0s; }
-
-@keyframes typing {
-  0%, 80%, 100% {
-    transform: scale(0);
-    opacity: 0.5;
+  .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+  .typing-dot:nth-child(3) { animation-delay: 0s; }
+  
+  @keyframes typing {
+    0%, 60%, 100% { 
+      transform: translateY(0);
+      opacity: 0.7;
+    }
+    30% { 
+      transform: translateY(-5px);
+      opacity: 1;
+    }
   }
-  40% {
-    transform: scale(1);
-    opacity: 1;
+  
+  .input-area {
+    padding: 20rpx;
+    border-top: 1px solid rgba(248, 46, 138, 0.2);
+    background-color: white;
+    box-shadow: 0 -2rpx 8rpx rgba(248, 46, 138, 0.05);
+    position: relative;
+    z-index: 10;
   }
-}
-
-.input-area {
-  background-color: var(--color-bg-card);
-  border-top: 3px solid var(--color-text-primary);
-  padding: var(--spacing-md);
-}
-
-.input-container {
-  display: flex;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
-}
-
-.message-input {
-  flex: 1;
-  padding: var(--spacing-md);
-  border: 2px solid var(--color-text-primary);
-  background-color: var(--color-bg-page);
-  font-size: var(--font-size-md);
-  color: var(--color-text-primary);
-}
-
-.send-btn {
-  padding: var(--spacing-md) var(--spacing-lg);
-}
-
-.send-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.quick-replies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xs);
-}
-
-.quick-reply {
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.quick-reply:active {
-  transform: scale(0.95);
-}
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+  }
+  
+  .message-input {
+    flex: 1;
+    padding: 20rpx 24rpx;
+    border: 1px solid rgba(248, 46, 138, 0.3);
+    background-color: white;
+    color: #333;
+    font-size: 28rpx;
+    border-radius: 30rpx;
+    box-shadow: inset 0 2rpx 4rpx rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .message-input:focus {
+    border-color: #F82E8A;
+    box-shadow: inset 0 2rpx 4rpx rgba(0, 0, 0, 0.05), 0 0 0 4rpx rgba(248, 46, 138, 0.1);
+  }
+  
+  .message-input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12rpx;
+    margin-top: 20rpx;
+  }
+  
+  .quick-reply {
+    padding: 12rpx 20rpx;
+    border: 1px solid rgba(248, 46, 138, 0.3);
+    background-color: white;
+    color: #F82E8A;
+    font-size: 24rpx;
+    border-radius: 20rpx;
+    transition: all 0.3s ease;
+    box-shadow: 0 2rpx 6rpx rgba(248, 46, 138, 0.05);
+  }
+  
+  .quick-reply:active {
+    background-color: #F82E8A;
+    color: white;
+    box-shadow: 0 2rpx 10rpx rgba(248, 46, 138, 0.2);
+    transform: translateY(2rpx);
+  }
+  
+  /* anime-btn 样式 - 来自全局样式的副本 */
+  .anime-btn {
+    background-color: #F82E8A;
+    color: white;
+    border: none;
+    padding: 18rpx 36rpx;
+    font-size: 28rpx;
+    border-radius: 30rpx;
+    box-shadow: 0 4rpx 12rpx rgba(248, 46, 138, 0.3);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 1rpx;
+  }
+  
+  .anime-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2rpx 6rpx rgba(248, 46, 138, 0.2);
+  }
+  
+  .anime-btn:disabled {
+    background-color: #FFD6E5;
+    color: #FFA4C5;
+    box-shadow: none;
+  }
+  
+  /* anime-title 样式 - 来自全局样式的副本 */
+  .anime-title {
+    font-size: 44rpx;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+    letter-spacing: 2rpx;
+    font-family: 'Arial Rounded MT Bold', sans-serif;
+  }
+  
+  /* anime-card 样式 */
+  .anime-card {
+    background-color: white;
+    border-radius: 24rpx;
+    box-shadow: 0 4rpx 16rpx rgba(248, 46, 138, 0.1);
+    border: 1rpx solid rgba(248, 46, 138, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  /* anime-tag 样式 */
+  .anime-tag {
+    background-color: rgba(248, 46, 138, 0.05);
+    border: 1rpx solid rgba(248, 46, 138, 0.3);
+    color: #F82E8A;
+    border-radius: 20rpx;
+    padding: 12rpx 20rpx;
+    font-size: 24rpx;
+    transition: all 0.3s ease;
+  }
+  
+  .anime-tag:active {
+    background-color: #F82E8A;
+    color: white;
+    box-shadow: 0 2rpx 8rpx rgba(248, 46, 138, 0.2);
+  }
 </style>

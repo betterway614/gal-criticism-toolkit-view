@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二次元游戏推荐平台</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'HuaKangShaoNv';
+            src: url('https://fonts.cdnfonts.com/css/hk-grotesk') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: 'HuaKangShaoNv', 'Noto Sans SC', sans-serif;
+            color: #333;
+            padding-bottom: 80px;
+            background-color: #FFF0F5;
+        }
+        
+        .page {
+            display: none;
+            padding: 16px;
+            background-color: white;
+            border-radius: 12px;
+            margin: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .function-btn {
+            width: 220px;
+            height: 180px;
+            border-radius: 16px;
+            background-color: white;
+            border: 2px solid #F82E8A;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
+        }
+        
+        .function-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(248, 46, 138, 0.2);
+        }
+        
+        .function-desc {
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .chat-message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .chat-message.user {
+            background-color: #7B61FF;
+            color: white;
+            align-self: flex-end;
+        }
+        
+        .chat-message.bot {
+            background-color: #F3F4F6;
+            color: #333;
+            align-self: flex-start;
+        }
+        
+        .profile-section {
+            background-color: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .character-image {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 280px;
+            height: 400px;
+            opacity: 0.25;
+            z-index: -1;
+        }
+        
+        @media (max-width: 768px) {
+            .function-btn {
+                width: 180px;
+                height: 150px;
+            }
+            
+            .character-image {
+                width: 200px;
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 美少女角色立绘 -->
+    <img src="https://s.coze.cn/image/6kOzwBA0gCg/" alt="美少女角色" class="character-image">
+
+    <!-- 首页 -->
+    <div id="home-page" class="page active">
+        <h1 class="text-3xl font-bold mb-8 text-center text-pink-600">
+            <i class="fas fa-gamepad mr-2"></i>二次元游戏推荐
+        </h1>
+        
+        <!-- 功能入口区 -->
+        <div class="flex flex-wrap justify-center gap-6 mb-8" style="width: 80%; margin: 0 auto;">
+            <button class="function-btn">
+                <i class="fas fa-gamepad text-5xl mb-4 text-pink-600"></i>
+                <span class="text-pink-600 font-medium text-lg">趣味游戏</span>
+                <div class="function-desc">通过选择喜欢的角色立绘，探索你的游戏偏好</div>
+            </button>
+            
+            <button class="function-btn">
+                <i class="fas fa-comment-alt text-5xl mb-4 text-pink-600"></i>
+                <span class="text-pink-600 font-medium text-lg">开始对话</span>
+                <div class="function-desc">与AI助手实时交流，获取个性化GalGame推荐</div>
+            </button>
+            
+            <button class="function-btn">
+                <i class="fas fa-clipboard-list text-5xl mb-4 text-pink-600"></i>
+                <span class="text-pink-600 font-medium text-lg">问卷测试</span>
+                <div class="function-desc">完成简短问卷，精准匹配你的恋爱游戏喜好</div>
+            </button>
+        </div>
+        
+        <!-- 热门游戏推荐区 -->
+        <h2 class="text-2xl font-bold mb-4 text-pink-600">
+            <i class="fas fa-fire mr-2"></i>热门游戏推荐
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="bg-white p-4 rounded-xl border-2 border-purple-300">
+                <img src="https://s.coze.cn/image/6kOzwBA0gCg/" alt="原神" class="w-full h-40 object-cover rounded-lg mb-3">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-lg font-bold mb-2 text-purple-600">原神</h3>
+                    <div class="flex items-center bg-purple-100 px-2 py-1 rounded-full">
+                        <i class="fas fa-star text-yellow-500 mr-1"></i>
+                        <span class="text-sm font-bold">4.8</span>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-1">
+                    <span class="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded-full">开放世界</span>
+                    <span class="text-xs px-2 py-1 bg-pink-100 text-pink-600 rounded-full">角色扮演</span>
+                </div>
+            </div>
+            
+            <div class="bg-white p-4 rounded-xl border-2 border-purple-300">
+                <img src="https://s.coze.cn/image/gDiVTnTLJrI/" alt="明日方舟" class="w-full h-40 object-cover rounded-lg mb-3">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-lg font-bold mb-2 text-purple-600">明日方舟</h3>
+                    <div class="flex items-center bg-purple-100 px-2 py-1 rounded-full">
+                        <i class="fas fa-star text-yellow-500 mr-1"></i>
+                        <span class="text-sm font-bold">4.7</span>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-1">
+                    <span class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded-full">策略</span>
+                    <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">塔防</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 对话页 -->
+    <div id="chat-page" class="page">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-pink-600">
+                <i class="fas fa-comment-alt mr-2"></i>对话推荐
+            </h2>
+            <button onclick="switchPage('home-page')" class="text-gray-500">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        
+        <div class="flex flex-col mb-4" id="chat-messages" style="height: 60vh; overflow-y: auto;">
+            <div class="chat-message bot">
+                你好！我是游戏推荐助手，可以告诉我你喜欢的游戏类型吗？
+            </div>
+        </div>
+        
+        <div class="flex">
+            <input type="text" placeholder="输入你的回复..." class="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+            <button class="bg-purple-600 text-white px-4 py-2 rounded-r-lg">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 我的页 -->
+    <div id="profile-page" class="page">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-pink-600">
+                <i class="fas fa-user mr-2"></i>个人中心
+            </h2>
+            <button onclick="switchPage('home-page')" class="text-gray-500">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        
+        <div class="profile-section">
+            <div class="flex items-center mb-4">
+                <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+                    <i class="fas fa-user text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">游戏玩家</h3>
+                    <p class="text-gray-500 text-sm">Lv.5 资深玩家</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h3 class="font-bold text-lg mb-3">我的收藏</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-gray-100 rounded-lg p-3 flex items-center">
+                    <img src="https://s.coze.cn/image/6kOzwBA0gCg/" alt="原神" class="w-12 h-12 rounded-lg mr-2">
+                    <span class="text-sm">原神</span>
+                </div>
+                <div class="bg-gray-100 rounded-lg p-3 flex items-center">
+                    <img src="https://s.coze.cn/image/gDiVTnTLJrI/" alt="明日方舟" class="w-12 h-12 rounded-lg mr-2">
+                    <span class="text-sm">明日方舟</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h3 class="font-bold text-lg mb-3">设置</h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg">
+                    <span>通知设置</span>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg">
+                    <span>隐私设置</span>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-lg flex justify-around items-center py-3 z-50">
+        <a href="#" class="flex flex-col items-center nav-active" onclick="switchPage('home-page')">
+            <i class="fas fa-home text-2xl text-pink-600"></i>
+            <span class="text-xs mt-1 text-pink-600">首页</span>
+        </a>
+        <a href="#" class="flex flex-col items-center text-gray-500" onclick="switchPage('chat-page')">
+            <i class="fas fa-comment-alt text-2xl"></i>
+            <span class="text-xs mt-1">对话</span>
+        </a>
+        <a href="#" class="flex flex-col items-center text-gray-500" onclick="switchPage('profile-page')">
+            <i class="fas fa-user text-2xl"></i>
+            <span class="text-xs mt-1">我的</span>
+        </a>
+    </nav>
+    
+    <script>
+        // 页面切换函数
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            // 更新导航栏选中状态
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('nav-active');
+                link.classList.add('text-gray-500');
+                link.querySelector('i').classList.remove('text-pink-600');
+                link.querySelector('span').classList.remove('text-pink-600');
+            });
+            
+            // 设置当前选中项样式
+            const currentNavItem = Array.from(document.querySelectorAll('nav a')).find(item => {
+                return item.getAttribute('onclick')?.includes(pageId);
+            });
+            
+            if (currentNavItem) {
+                currentNavItem.classList.add('nav-active');
+                currentNavItem.classList.remove('text-gray-500');
+                currentNavItem.querySelector('i').classList.add('text-pink-600');
+                currentNavItem.querySelector('span').classList.add('text-pink-600');
+            }
+        }
+    </script>
+</body>
+</html>

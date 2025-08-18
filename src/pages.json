@@ -38,30 +38,36 @@
 		}
 	],
 	"tabBar": {
-		"color": "#8a8a8a",
-		"selectedColor": "#2D7FF9",
+		"color": "#999999",
+		"selectedColor": "#F82E8A",
 		"backgroundColor": "#ffffff",
-		"borderStyle": "black",
+		"borderStyle": "#F82E8A",
 		"list": [
 			{
 				"pagePath": "pages/home/index",
-				"text": "首页"
+				"text": "首页",
+				"iconPath": "static/images/home.svg",
+				"selectedIconPath": "static/images/home_selected.svg"
 			},
 			{
-				"pagePath": "pages/recommend/index",
-				"text": "推荐"
+				"pagePath": "pages/dialogue/index",
+				"text": "对话",
+				"iconPath": "static/images/message.svg",
+				"selectedIconPath": "static/images/message_selected.svg"
 			},
 			{
 				"pagePath": "pages/personal/index",
-				"text": "我的"
+				"text": "我的",
+				"iconPath": "static/images/user.svg",
+				"selectedIconPath": "static/images/user_selected.svg"
 			}
 		]
-	},
+},
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "GAL Game Center",
-		"navigationBarBackgroundColor": "#1A1D27",
-		"backgroundColor": "#F4F6FC"
+		"navigationBarBackgroundColor": "#F82E8A",
+		"backgroundColor": "#FFF0F5"
 	},
 	"easycom": {
 	  "autoscan": true,
