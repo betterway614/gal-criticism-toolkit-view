@@ -143,3 +143,7 @@ vite.config.ts.timestamp-*
 *.iml
 *.iws
 *.ipr
+
+# macOS 系统文件
+.DS_Store
+*.DS_Store
