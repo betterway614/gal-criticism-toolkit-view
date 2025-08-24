@@ -47,7 +47,7 @@
     <!-- 输入区域 -->
     <view class="input-area">
       <view class="input-container">
-        <input 
+        <uni-input 
           class="message-input"
           v-model="inputMessage"
           placeholder="说出你的想法..."
@@ -59,6 +59,7 @@
           class="send-btn anime-btn" 
           :disabled="!inputMessage.trim() || isLoading"
           @click="sendMessage"
+          style="color: white;"
         >
           发送
         </button>
